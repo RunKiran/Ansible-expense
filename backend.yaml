@@ -42,7 +42,4 @@
     args:
      chdir: /app
 
-  - name: Setup SystemD Expense Backend Service
-    ansible.builtin.copy:
-     src: backend.service
-     dest: /etc/systemd/system/backend.service
+    
