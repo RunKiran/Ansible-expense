@@ -2,6 +2,8 @@
   hosts: backend
   become: yes
   vars:
+    login_host: backend.mkaws.online
+    login_password: ExpenseApp@1
   tasks:
   - name: disabling nodejs
     ansible.builtin.command: dnf module disable nodejs -y
@@ -42,4 +44,23 @@
     args:
      chdir: /app
 
-    
+  - name: copy backend service
+    ansible.builtin.copy:
+      src: backend.service
+      dest: /etc/systemd/system/backend.service
+
+  - name: install python mysql dependencies
+    ansible.builtin.pip: 
+      name:
+      - PyMySQL # to connect MySQL DB from Ansible
+      - cryptography
+      executable: pip3.9 # pip3.11 if python version is 3.11
+
+  - name: load the schema or importing data
+    community.mysql.mysql_db:
+     login_user: root
+     login_password: "{{ login_password }}"
+     login_host: "{{ login_host }}"
+     state:  import
+     target: /app/schema/backend.sql
+
