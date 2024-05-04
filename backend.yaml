@@ -1,5 +1,6 @@
 - name: configuring backend
   hosts: backend
+  become: yes
   vars:
   tasks:
   - name: disabling nodejs
