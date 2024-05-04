@@ -39,6 +39,8 @@
 
   - name: installing dependencies with npm
     ansible.builtin.command: npm install
+    args:
+     chdir: /app
 
   - name: Setup SystemD Expense Backend Service
     ansible.builtin.copy:
