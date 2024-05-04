@@ -2,7 +2,7 @@
   hosts: backend
   become: yes
   vars:
-    login_host: backend.mkaws.online
+    login_host: db.mkaws.online
     login_password: ExpenseApp@1
   tasks:
   - name: disabling nodejs
