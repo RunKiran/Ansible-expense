@@ -26,4 +26,4 @@
   - name: downloading  the app code to created app DIR
     ansible.builtin.get_url:
      url: https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
-     path: /tmp/backend.zip
+     dest: /tmp/backend.zip
