@@ -1,0 +1,44 @@
+- name: Setting up DB
+  hosts: DB
+  become: yes
+  vars:
+   login_host: db.mkaws.online
+  vars_prompt:
+  - name: mysql_root_password 
+    prompt: please enter mysql root password
+    private: no
+  tasks:
+  - name: installing mysql-server
+    ansible.builtin.dnf: 
+     name: mysql-server
+     state: latest
+
+
+  - name: starting mysql
+    ansible.builtin.service:
+     name: mysql
+     state: restarted
+     enabled: yes
+
+  - name: daemon-reloading
+    ansible.builtin.systemd_service:
+     name: mysqld
+     state: reloaded 
+
+  # check passwd is already setup or not
+  - name: check DB connection
+    community.mysql.mysql_info:
+     login_user: root
+     login_password: "{{mysql_root_password}}"
+     login_hosts: "{{login_host}}"
+     filter: version  
+    ingore_errors: yes 
+    register: mysql_connection_output 
+
+  - name: print output of connection of mysql
+    ansible.builtin.debug:
+     msg: "output: {{mysql_connection_output}}"  
+
+  - name: setting up root passwd for mysql
+    ansible.builtin.command:  "mysql_secure_installation --set-root-pass ExpenseApp@1"
+    when: mysql_connection_output.failed is true
