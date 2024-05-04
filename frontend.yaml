@@ -1,5 +1,6 @@
 - name: configuring frontend server
   hosts: frontend
+  become: yes
   vars:
   tasks:
   - name: install nginx
