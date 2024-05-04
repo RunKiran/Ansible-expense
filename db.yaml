@@ -20,7 +20,12 @@
      state: restarted
      enabled: yes
 
- 
+  - name: install python dependencices for connect mysql
+    ansible.builtin.pip:
+     name:
+     - pymysql
+     - cryptography # to use passowrds
+     executable: pip3.9 #bcz ansible using now 3.9 version
 
   # check passwd is already setup or not
   - name: check DB connection
