@@ -28,10 +28,10 @@
   # check passwd is already setup or not
   - name: check DB connection
     community.mysql.mysql_info:
-     login_user: root
-     login_password: "{{mysql_root_password}}"
-     login_hosts: "{{login_host}}"
-     filter: version  
+      login_user: root
+      login_password: "{{mysql_root_password}}"
+      login_hosts: "{{login_host}}"
+      filter: version  
     ingore_errors: yes 
     register: mysql_connection_output 
 
