@@ -16,14 +16,11 @@
 
   - name: starting mysql
     ansible.builtin.service:
-     name: mysql
+     name: mysqld
      state: restarted
      enabled: yes
 
-  - name: daemon-reloading
-    ansible.builtin.systemd_service:
-     name: mysqld
-     state: reloaded 
+ 
 
   # check passwd is already setup or not
   - name: check DB connection
