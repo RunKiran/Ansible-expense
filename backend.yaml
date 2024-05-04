@@ -11,8 +11,11 @@
 
   - name: installing nodejs
     ansible.builtin.dnf:
-     name: nodejs
-     state: latest
+      name: "{{item}}"
+      state: latest
+    loop:
+     - nodejs
+     - mysql
 
   - name: adding user
     ansible.builtin.user:
@@ -33,3 +36,11 @@
      src: /tmp/backend.zip
      dest: /app
      remote_src: yes
+
+  - name: installing dependencies with npm
+    ansible.builtin.command: npm install
+
+  - name: Setup SystemD Expense Backend Service
+    ansible.builtin.copy:
+     src: backend.service
+     dest: /etc/systemd/system/backend.service
